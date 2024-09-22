@@ -31,3 +31,10 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Ignore Coverage report
+/coverage/
+
+# Ignore VSCode config
+/.vscode/
+*.code-workspace
