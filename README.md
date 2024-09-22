@@ -43,7 +43,7 @@ Commit messages must follow the Conventional Commits: https://www.conventionalco
 
 ## Tests
 
-It uses RSpec, FactoryBot and SimpleCov. Initially, the minimum expected line coverage is 100%, but this can be lowered if a good reason arises.
+It uses RSpec, FactoryBot and SimpleCov. Initially, the minimum expected line coverage is 100%, but this can be decreased if a good reason arises.
 
 RSpec Style Guides: https://github.com/rubocop/rspec-style-guide
 
