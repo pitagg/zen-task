@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   post "/login", to: "sessions#create"
+  get "/me", to: "sessions#show"
 end

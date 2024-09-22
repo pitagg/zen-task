@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :authorize_request, only: :show
+
   def create
     user = User.find_by(email: params[:email])
 
@@ -8,5 +10,9 @@ class SessionsController < ApplicationController
     else
       render json: { error: "Invalid email or password" }, status: :unauthorized
     end
+  end
+
+  def show
+    render json: @current_user.slice(:name, :email), status: :ok
   end
 end
