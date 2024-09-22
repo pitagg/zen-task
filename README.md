@@ -35,6 +35,16 @@ Things you may want to cover:
 - Route /me to check logged user data (GET /me with header Authorization + JWT).
 - JWT expires in 24 hours.
 
+## Setup
+
+`bundle install`
+
+`bundle exec rails db:prepare` to create the database, apply schema and run seeds.
+
+> [!TIP]
+> `db:prepare` is idempotent, so it will only perform the necessary tasks once. If a reset is necessary, use `db:setup` instead, which will cleanup and rebuild the database. Use it carefully!
+
+
 ## Development Flow
 
 Create 'new_branch' -> Commit -> Push to 'new_branch' -> Open Pull Request 'new_branch' to 'main' -> Code review -> Close PR with squash strategy
