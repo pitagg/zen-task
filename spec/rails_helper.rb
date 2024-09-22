@@ -36,6 +36,7 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [ "#{::Rails.root}/spec/fixtures" ]
@@ -67,4 +68,15 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # FactoryBot helpers
+  config.include FactoryBot::Syntax::Methods
+
+  # Permit to run specific tests with `fit` method or :focus param
+  config.filter_run focus: true
+  config.run_all_when_everything_filtered = true
+
+
+  # Custom helpers at spec/support/request_spec_helper.rb
+  config.include RequestSpecHelper, type: :request
 end

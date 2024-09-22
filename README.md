@@ -27,6 +27,12 @@ Things you may want to cover:
 * ...
 
 
+## General feature information
+
+- Authentication with JWT (POST /login with email and password).
+- Route /me to check logged user data (GET /me with header Authorization + JWT).
+- JWT expires in 24 hours.
+
 ## Development Flow
 
 Create 'new_branch' -> Commit -> Push to 'new_branch' -> Open Pull Request 'new_branch' to 'main' -> Code review -> Close PR with squash strategy
@@ -36,6 +42,8 @@ Create 'new_branch' -> Commit -> Push to 'new_branch' -> Open Pull Request 'new_
 Commit messages must follow the Conventional Commits: https://www.conventionalcommits.org
 
 ## Tests
+
+It uses RSpec, FactoryBot and SimpleCov. Initially, the minimum expected line coverage is 100%, but this can be lowered if a good reason arises.
 
 RSpec Style Guides: https://github.com/rubocop/rspec-style-guide
 

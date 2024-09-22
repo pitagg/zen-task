@@ -11,3 +11,5 @@ inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
 Layout/LineLength:
   Max: 90
+  AllowedPatterns:
+    - !ruby/regexp /\A *#/

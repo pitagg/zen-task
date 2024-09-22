@@ -1,11 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { described_class.new(
-    name: "Henry",
-    email: "henry@example.com",
-    password: "12345678"
-  )}
+  let(:user) { create(:user) }
 
   it "creates a valid user" do
     expect(user).to be_valid
