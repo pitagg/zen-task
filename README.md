@@ -1,6 +1,8 @@
 # zen-task
 Just another simple task and project manager.
 
+[![CI](https://github.com/pitagg/zen-task/actions/workflows/ci.yml/badge.svg)](https://github.com/pitagg/zen-task/actions/workflows/ci.yml)
+
 # README
 
 This README would normally document whatever steps are necessary to get the
@@ -43,7 +45,7 @@ Commit messages must follow the Conventional Commits: https://www.conventionalco
 
 ## Tests
 
-It uses RSpec, FactoryBot and SimpleCov. Initially, the minimum expected line coverage is 100%, but this can be lowered if a good reason arises.
+It uses RSpec, FactoryBot and SimpleCov. Initially, the minimum expected line coverage is 100%, but this can be decreased if a good reason arises.
 
 RSpec Style Guides: https://github.com/rubocop/rspec-style-guide
 
