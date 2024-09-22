@@ -41,10 +41,14 @@ group :development, :test do
 
   # Testing with RSpec
   gem "rspec-rails"
+  gem "rubocop-rspec"
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-  gem "rubocop-rspec"
 
-  gem "simplecov", require: false  # Test coverage
+  # Test coverage
+  gem "simplecov", require: false
+
+  # Generate data for testing
+  gem 'factory_bot_rails'
 end
