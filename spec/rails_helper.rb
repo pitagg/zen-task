@@ -1,5 +1,8 @@
-require 'simplecov'
-SimpleCov.start
+# Runs coverage by default unless `COVERAGE=false` is used with RSpec command.
+unless ENV["COVERAGE"] == false
+  require 'simplecov'
+  SimpleCov.start
+end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'

@@ -39,5 +39,5 @@ Commit messages must follow the Conventional Commits: https://www.conventionalco
 
 RSpec Style Guides: https://github.com/rubocop/rspec-style-guide
 
-**Run tests:** `bundle exec rspec`
-**Code coverage report:** `COVERAGE=true bundle exec rspec`
+**Run tests (coverage by default):** `bundle exec rspec`
+**Run tests without code coverage:** `COVERAGE=false bundle exec rspec`
