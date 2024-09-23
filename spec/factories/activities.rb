@@ -4,7 +4,7 @@ FactoryBot.define do
     start_date { "2024-09-23" }
     end_date { "2024-09-23" }
     completed { false }
-    project { user }
-    user { project }
+    project { nil }
+    user { nil }
   end
 end
