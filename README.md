@@ -1,6 +1,11 @@
 # zen-task
 Just another simple task and project manager.
 
+[![CI](https://github.com/pitagg/zen-task/actions/workflows/ci.yml/badge.svg)](https://github.com/pitagg/zen-task/actions/workflows/ci.yml)
+
+> [!IMPORTANT]
+> This project is still in progress. Feel free to explore it, be patient though.
+
 # README
 
 This README would normally document whatever steps are necessary to get the
@@ -33,6 +38,16 @@ Things you may want to cover:
 - Route /me to check logged user data (GET /me with header Authorization + JWT).
 - JWT expires in 24 hours.
 
+## Setup
+
+`bundle install`
+
+`bundle exec rails db:prepare` to create the database, apply schema and run seeds.
+
+> [!TIP]
+> `db:prepare` is idempotent, so it will only perform the necessary tasks once. If a reset is necessary, use `db:setup` instead, which will cleanup and rebuild the database. Use it carefully!
+
+
 ## Development Flow
 
 Create 'new_branch' -> Commit -> Push to 'new_branch' -> Open Pull Request 'new_branch' to 'main' -> Code review -> Close PR with squash strategy
@@ -43,7 +58,7 @@ Commit messages must follow the Conventional Commits: https://www.conventionalco
 
 ## Tests
 
-It uses RSpec, FactoryBot and SimpleCov. Initially, the minimum expected line coverage is 100%, but this can be lowered if a good reason arises.
+It uses RSpec, FactoryBot and SimpleCov. Initially, the minimum expected line coverage is 100%, but this can be decreased if a good reason arises.
 
 RSpec Style Guides: https://github.com/rubocop/rspec-style-guide
 

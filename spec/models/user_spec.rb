@@ -29,4 +29,8 @@ RSpec.describe User, type: :model do
     second_user = user.dup
     expect(second_user).to_not be_valid
   end
+
+  it "has many projects" do
+    expect(user).to respond_to(:projects)
+  end
 end
