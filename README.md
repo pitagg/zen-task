@@ -3,6 +3,9 @@ Just another simple task and project manager.
 
 [![CI](https://github.com/pitagg/zen-task/actions/workflows/ci.yml/badge.svg)](https://github.com/pitagg/zen-task/actions/workflows/ci.yml)
 
+> [!IMPORTANT]
+> This project is still in progress. Feel free to explore it, be patient though.
+
 # README
 
 This README would normally document whatever steps are necessary to get the
