@@ -145,7 +145,7 @@ RSpec.describe "Projects", type: :request do
           end
 
           it "returns the validations messages" do
-            expect(json_body['errors']).to eq(["Name can't be blank"])
+            expect(json_body['errors']).to eq([ "Name can't be blank" ])
           end
 
           it "returns status code 422" do
@@ -156,7 +156,8 @@ RSpec.describe "Projects", type: :request do
 
       context 'when the project does not exist' do
         let(:project_id) { 0 }
-        before { patch "/projects/#{project_id}", params: valid_attributes, headers: valid_headers }
+        before {
+ patch "/projects/#{project_id}", params: valid_attributes, headers: valid_headers }
 
         it 'returns a not found message' do
           expect(response.body).to match(/Project not found/)
@@ -170,7 +171,8 @@ RSpec.describe "Projects", type: :request do
 
 
     context 'when the user is not authenticated' do
-      before { patch "/projects/#{project_id}", params: valid_attributes, headers: invalid_headers }
+      before {
+ patch "/projects/#{project_id}", params: valid_attributes, headers: invalid_headers }
       it_behaves_like :unauthenticated
     end
   end

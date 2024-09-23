@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :authorize_request
-  before_action :set_project, only: [:show, :update, :destroy]
+  before_action :set_project, only: [ :show, :update, :destroy ]
 
 
   def index
@@ -40,7 +40,7 @@ class ProjectsController < ApplicationController
   def set_project
     @project = @current_user.projects.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Project not found' }, status: :not_found
+    render json: { error: "Project not found" }, status: :not_found
   end
 
   def project_params
