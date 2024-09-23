@@ -136,6 +136,22 @@ RSpec.describe "Projects", type: :request do
         it 'returns status code 200' do
           expect(response).to have_http_status(200)
         end
+
+        context "when the request is invalid" do
+          before do
+            patch "/projects/#{project_id}",
+              params: { name: "" }.to_json,
+              headers: valid_headers
+          end
+
+          it "returns the validations messages" do
+            expect(json_body['errors']).to eq(["Name can't be blank"])
+          end
+
+          it "returns status code 422" do
+            expect(response).to have_http_status(:unprocessable_entity)
+          end
+        end
       end
 
       context 'when the project does not exist' do
