@@ -1,5 +1,5 @@
 # zen-task
-Just another simple task and project manager.
+Just another simple task and project management tool. :)
 
 [![CI](https://github.com/pitagg/zen-task/actions/workflows/ci.yml/badge.svg)](https://github.com/pitagg/zen-task/actions/workflows/ci.yml)
 
@@ -37,6 +37,7 @@ Things you may want to cover:
 - Authentication with JWT (POST /login with email and password).
 - Route /me to check logged user data (GET /me with header Authorization + JWT).
 - JWT expires in 24 hours.
+- Activity end_date is updated to the current date when it's marked as completed.
 
 ## Setup
 
