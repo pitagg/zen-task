@@ -11,16 +11,17 @@
 
 # Add users
 (1..5).each_with_index do |i|
-  instance_variable_set "@user_#{i}".to_sym, User.create!(
+  User.create!(
     name: "User #{i}",
     email: "user_#{i}@domain.com",
     password: "12345678"
   )
 end
+@user_1 = User.find(1)
 
 # Add projects to User 1
 (1..5).each_with_index do |i|
-  instance_variable_set "@project_#{i}".to_sym, @user_1.projects.create!(
+  @user_1.projects.create!(
     name: "Project #{i}",
 
     # Each project starts 14 days after the previous one
@@ -29,4 +30,20 @@ end
     # Ends 14 days after the start.
     end_date: Date.today + ((i + 1) * 14)
   )
+end
+
+# Add activities to Project 1 and 2
+Project.find(1, 2).each_with_index do |project|
+  (1..5).each_with_index do |i|
+    project.activities.create!(
+      user: project.user,
+      name: "Activity #{i} de #{project.name}",
+      completed: (project.id + i).odd?,
+
+      # Each activity starts 7 days after the previous one
+      start_date: Date.today + (i * 7),
+      # Ends 7 days after the start.
+      end_date: Date.today + ((i + 1) * 7)
+    )
+  end
 end

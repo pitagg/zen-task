@@ -23,13 +23,13 @@ RSpec.describe Project, type: :model do
     expect(project).to_not be_valid
   end
 
-  it "prevents an end date smaller than the start date" do
+  it "prevents end date before the start date" do
     project.start_date = Date.tomorrow
     project.end_date = Date.today
     expect(project).to_not be_valid
   end
 
-  it "balongs to a user" do
+  it "belongs to a user" do
     project.user = nil
     expect(project).to_not be_valid
   end

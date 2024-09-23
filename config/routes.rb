@@ -15,5 +15,7 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   get "/me", to: "sessions#show"
 
-  resources :projects
+  resources :projects do
+    resources :activities
+  end
 end

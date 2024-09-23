@@ -4,26 +4,8 @@ RSpec.describe "Projects", type: :request do
   let!(:user) { create(:user) }
   let!(:projects) { create_list(:project, 5, user: user) }
   let(:project_id) { projects.first.id }
-  let(:valid_headers) do
-    {
-      'Authorization' => "Bearer #{JwtService.encode(user_id: user.id)}",
-      'Content-Type' => 'application/json'
-    }
-  end
-
+  let(:valid_headers) { valid_header_for(user) }
   let(:invalid_headers) { { 'Content-Type' => 'application/json' } }
-
-  # Prevent repeated examples for every routes
-  # Tests use it with `it_behaves_like(:unauthenticated) method
-  shared_examples_for :unauthenticated do
-    it 'returns a failure message' do
-      expect(json_body['error']).to match(/Unauthorized/)
-    end
-
-    it 'returns status code 401' do
-      expect(response).to have_http_status(401)
-    end
-  end
 
   describe "GET /projects" do
     context 'when the user is authenticated' do
@@ -78,7 +60,7 @@ RSpec.describe "Projects", type: :request do
 
   describe 'POST /projects' do
     let(:valid_attributes) do
-      { name: 'New Project', start_date: '2024-09-01', end_date: '2024-09-30' }.to_json
+      build(:project, name: "New Project").slice(:name, :start_date, :end_date).to_json
     end
 
     context "when the user is authenticated" do
@@ -156,8 +138,11 @@ RSpec.describe "Projects", type: :request do
 
       context 'when the project does not exist' do
         let(:project_id) { 0 }
-        before {
- patch "/projects/#{project_id}", params: valid_attributes, headers: valid_headers }
+        before do
+          patch "/projects/#{project_id}",
+            params: valid_attributes,
+            headers: valid_headers
+        end
 
         it 'returns a not found message' do
           expect(response.body).to match(/Project not found/)
@@ -169,10 +154,12 @@ RSpec.describe "Projects", type: :request do
       end
     end
 
-
     context 'when the user is not authenticated' do
-      before {
- patch "/projects/#{project_id}", params: valid_attributes, headers: invalid_headers }
+      before do
+        patch "/projects/#{project_id}",
+          params: valid_attributes,
+          headers: invalid_headers
+      end
       it_behaves_like :unauthenticated
     end
   end
