@@ -95,3 +95,6 @@ RSpec Style Guides: https://github.com/rubocop/rspec-style-guide
 - UI/UX improvements;
 - Setup front build and complete deploy;
 - Handle pagination on Projects and Acitivites list.
+- Considere peformance improvents for the completion calculations. Both values are persisted in the database to avoid problems with performance, but a couple of improvements could be considered in the future, such as:
+    - Move the calculations to a background job to avoid affecting user experience when saving the activity;
+    - Move the values to a cache (Redis) as they get much more writing operations.
