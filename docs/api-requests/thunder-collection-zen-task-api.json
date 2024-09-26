@@ -1,0 +1,251 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "ZenTask API",
+    "collectionId": "e0b9996b-6840-4e87-b926-bd05c23194b7",
+    "dateExported": "2024-09-26T18:59:29.090Z",
+    "version": "1.2",
+    "folders": [
+        {
+            "_id": "ea285412-425e-4829-afc4-ee466c728b9a",
+            "name": "Session",
+            "containerId": "",
+            "created": "2024-09-26T17:58:58.322Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "35afee03-9b45-41a5-9693-fac9ae2c207c",
+            "name": "Projects",
+            "containerId": "",
+            "created": "2024-09-26T18:39:22.488Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "4a04a036-ea27-4313-a0d6-b854bd55ac74",
+            "name": "Activities",
+            "containerId": "",
+            "created": "2024-09-26T18:50:09.784Z",
+            "sortNum": 30000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "b0e545a4-f065-4350-9757-f1f847a21e06",
+            "colId": "e0b9996b-6840-4e87-b926-bd05c23194b7",
+            "containerId": "ea285412-425e-4829-afc4-ee466c728b9a",
+            "name": "POST /login",
+            "url": "localhost:3000/api/v1/login",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-09-26T17:58:44.292Z",
+            "modified": "2024-09-26T18:37:46.971Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"user_1@domain.com\",\n  \"password\": \"12345678\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "4539fcee-64ad-4e0b-84f3-8c0ad3ac2ac0",
+            "colId": "e0b9996b-6840-4e87-b926-bd05c23194b7",
+            "containerId": "35afee03-9b45-41a5-9693-fac9ae2c207c",
+            "name": "GET /projects",
+            "url": "localhost:3000/api/v1/projects",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-09-26T18:39:04.976Z",
+            "modified": "2024-09-26T18:39:04.976Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{ZENTASK_USER_1_JWT}}"
+            }
+        },
+        {
+            "_id": "93d7db9e-a725-43d5-b042-51dd9cebf21d",
+            "colId": "e0b9996b-6840-4e87-b926-bd05c23194b7",
+            "containerId": "4a04a036-ea27-4313-a0d6-b854bd55ac74",
+            "name": "GET /project/:projectId/activities",
+            "url": "localhost:3000/api/v1/projects/1/activities",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-09-26T18:49:45.999Z",
+            "modified": "2024-09-26T18:49:45.999Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{ZENTASK_USER_1_JWT}}"
+            }
+        },
+        {
+            "_id": "fb6d0413-1bc9-47e3-a5b3-d024ad26e9d4",
+            "colId": "e0b9996b-6840-4e87-b926-bd05c23194b7",
+            "containerId": "ea285412-425e-4829-afc4-ee466c728b9a",
+            "name": "GET /me",
+            "url": "localhost:3000/api/v1/me",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-09-26T18:38:07.898Z",
+            "modified": "2024-09-26T18:38:21.504Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{ZENTASK_USER_1_JWT}}"
+            }
+        },
+        {
+            "_id": "621f8032-015b-48aa-96d0-820c42098823",
+            "colId": "e0b9996b-6840-4e87-b926-bd05c23194b7",
+            "containerId": "35afee03-9b45-41a5-9693-fac9ae2c207c",
+            "name": "GET /projects/:id",
+            "url": "localhost:3000/api/v1/projects/1",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-09-26T18:57:44.784Z",
+            "modified": "2024-09-26T18:57:51.730Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{ZENTASK_USER_1_JWT}}"
+            }
+        },
+        {
+            "_id": "d703cb5b-a45e-4e57-a59b-672b98154aec",
+            "colId": "e0b9996b-6840-4e87-b926-bd05c23194b7",
+            "containerId": "4a04a036-ea27-4313-a0d6-b854bd55ac74",
+            "name": "GET /project/:projectId/activities/:id",
+            "url": "localhost:3000/api/v1/projects/1/activities/1",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-09-26T18:58:09.382Z",
+            "modified": "2024-09-26T18:58:14.041Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{ZENTASK_USER_1_JWT}}"
+            }
+        },
+        {
+            "_id": "10f6fe43-4a7d-4200-b007-425dd3aa84f2",
+            "colId": "e0b9996b-6840-4e87-b926-bd05c23194b7",
+            "containerId": "35afee03-9b45-41a5-9693-fac9ae2c207c",
+            "name": "POST /projects",
+            "url": "localhost:3000/api/v1/projects",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-09-26T18:44:12.914Z",
+            "modified": "2024-09-26T18:44:41.637Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"New Project\",\n  \"start_date\": \"2024-10-23\",\n  \"end_date\": \"2024-09-28\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{ZENTASK_USER_1_JWT}}"
+            }
+        },
+        {
+            "_id": "f49d15e4-06d8-465d-b2ea-088c95db370f",
+            "colId": "e0b9996b-6840-4e87-b926-bd05c23194b7",
+            "containerId": "35afee03-9b45-41a5-9693-fac9ae2c207c",
+            "name": "PATCH /projects",
+            "url": "localhost:3000/api/v1/projects/1",
+            "method": "PATCH",
+            "sortNum": 40000,
+            "created": "2024-09-26T18:47:17.284Z",
+            "modified": "2024-09-26T18:47:17.284Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Another name\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{ZENTASK_USER_1_JWT}}"
+            }
+        },
+        {
+            "_id": "f4d6fd77-c1c0-4d51-88ad-47d77db7d92d",
+            "colId": "e0b9996b-6840-4e87-b926-bd05c23194b7",
+            "containerId": "35afee03-9b45-41a5-9693-fac9ae2c207c",
+            "name": "DELETE /project",
+            "url": "localhost:3000/api/v1/projects/1",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2024-09-26T18:48:22.090Z",
+            "modified": "2024-09-26T18:48:22.090Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{ZENTASK_USER_1_JWT}}"
+            }
+        },
+        {
+            "_id": "017ab43f-8973-4f28-9df8-96a30f2e047b",
+            "colId": "e0b9996b-6840-4e87-b926-bd05c23194b7",
+            "containerId": "4a04a036-ea27-4313-a0d6-b854bd55ac74",
+            "name": "POST /project/:projectId/activities",
+            "url": "localhost:3000/api/v1/projects/1/activities",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2024-09-26T18:51:25.601Z",
+            "modified": "2024-09-26T18:51:25.601Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Nova atividade no projeto\",\n  \"start_date\": \"2024-09-23\",\n  \"end_date\": \"2024-09-26\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{ZENTASK_USER_1_JWT}}"
+            }
+        },
+        {
+            "_id": "128b0eeb-a566-432d-ac7c-d8199ab055cf",
+            "colId": "e0b9996b-6840-4e87-b926-bd05c23194b7",
+            "containerId": "4a04a036-ea27-4313-a0d6-b854bd55ac74",
+            "name": "PATCH /project/:projectId/activities/:id",
+            "url": "localhost:3000/api/v1/projects/1/activities/1",
+            "method": "PATCH",
+            "sortNum": 70000,
+            "created": "2024-09-26T18:54:31.133Z",
+            "modified": "2024-09-26T18:54:31.133Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Another activity name\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{ZENTASK_USER_1_JWT}}"
+            }
+        },
+        {
+            "_id": "457247d7-8513-48d9-ae65-0dfab3f6e9e0",
+            "colId": "e0b9996b-6840-4e87-b926-bd05c23194b7",
+            "containerId": "4a04a036-ea27-4313-a0d6-b854bd55ac74",
+            "name": "DELETE /project/:projectId/activities/:id",
+            "url": "localhost:3000/api/v1/projects/1/activities/1",
+            "method": "DELETE",
+            "sortNum": 80000,
+            "created": "2024-09-26T18:56:55.176Z",
+            "modified": "2024-09-26T18:56:55.176Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{ZENTASK_USER_1_JWT}}"
+            }
+        }
+    ],
+    "ref": "kfxPHb2bbhuFsI25rKb_THpQOiC4EXA7EzR5_OshwhgvUck3D5ndG4ZdgzV1JmU_VgnMIqsmrlHtJw-2iLuXcA"
+}

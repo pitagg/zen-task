@@ -1,0 +1,418 @@
+{
+    "info": {
+        "_postman_id": "9b8b006b-726b-4167-8ba2-9544a61a38f6",
+        "name": "ZenTask API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "Session",
+            "item": [
+                {
+                    "name": "POST /login",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:3000/api/v1/login",
+                            "path": [
+                                "api",
+                                "v1",
+                                "login"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"email\": \"user_1@domain.com\",\n  \"password\": \"12345678\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "GET /me",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "localhost:3000/api/v1/me",
+                            "path": [
+                                "api",
+                                "v1",
+                                "me"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{ZENTASK_USER_1_JWT}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Projects",
+            "item": [
+                {
+                    "name": "GET /projects",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "localhost:3000/api/v1/projects",
+                            "path": [
+                                "api",
+                                "v1",
+                                "projects"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{ZENTASK_USER_1_JWT}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "POST /projects",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:3000/api/v1/projects",
+                            "path": [
+                                "api",
+                                "v1",
+                                "projects"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\": \"New Project\",\n  \"start_date\": \"2024-10-23\",\n  \"end_date\": \"2024-09-28\"\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{ZENTASK_USER_1_JWT}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "PATCH /projects",
+                    "request": {
+                        "method": "PATCH",
+                        "url": {
+                            "raw": "localhost:3000/api/v1/projects/1",
+                            "path": [
+                                "api",
+                                "v1",
+                                "projects",
+                                "1"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\": \"Another name\"\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{ZENTASK_USER_1_JWT}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "DELETE /project",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "localhost:3000/api/v1/projects/1",
+                            "path": [
+                                "api",
+                                "v1",
+                                "projects",
+                                "1"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{ZENTASK_USER_1_JWT}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "GET /projects/:id",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "localhost:3000/api/v1/projects/1",
+                            "path": [
+                                "api",
+                                "v1",
+                                "projects",
+                                "1"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{ZENTASK_USER_1_JWT}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Activities",
+            "item": [
+                {
+                    "name": "GET /project/:projectId/activities",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "localhost:3000/api/v1/projects/1/activities",
+                            "path": [
+                                "api",
+                                "v1",
+                                "projects",
+                                "1",
+                                "activities"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{ZENTASK_USER_1_JWT}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "POST /project/:projectId/activities",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:3000/api/v1/projects/1/activities",
+                            "path": [
+                                "api",
+                                "v1",
+                                "projects",
+                                "1",
+                                "activities"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\": \"Nova atividade no projeto\",\n  \"start_date\": \"2024-09-23\",\n  \"end_date\": \"2024-09-26\"\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{ZENTASK_USER_1_JWT}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "PATCH /project/:projectId/activities/:id",
+                    "request": {
+                        "method": "PATCH",
+                        "url": {
+                            "raw": "localhost:3000/api/v1/projects/1/activities/1",
+                            "path": [
+                                "api",
+                                "v1",
+                                "projects",
+                                "1",
+                                "activities",
+                                "1"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\": \"Another activity name\"\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{ZENTASK_USER_1_JWT}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "DELETE /project/:projectId/activities/:id",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "localhost:3000/api/v1/projects/1/activities/1",
+                            "path": [
+                                "api",
+                                "v1",
+                                "projects",
+                                "1",
+                                "activities",
+                                "1"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{ZENTASK_USER_1_JWT}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "GET /project/:projectId/activities/:id",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "localhost:3000/api/v1/projects/1/activities/1",
+                            "path": [
+                                "api",
+                                "v1",
+                                "projects",
+                                "1",
+                                "activities",
+                                "1"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{ZENTASK_USER_1_JWT}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
