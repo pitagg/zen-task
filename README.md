@@ -94,3 +94,4 @@ RSpec Style Guides: https://github.com/rubocop/rspec-style-guide
 - Write frontend and integration tests;
 - UI/UX improvements;
 - Setup front build and complete deploy;
+- Handle pagination on Projects and Acitivites list.

@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :activity do
     name { "MyString" }
-    start_date { "2024-09-23" }
-    end_date { "2024-09-23" }
+    start_date { Date.today - (1..15).to_a.sample }
+    end_date { Date.today + (1..15).to_a.sample }
     completed { false }
     project { nil }
     user { nil }
