@@ -28,8 +28,8 @@ const Header = () => {
           <Typography variant="body2" component="span" sx={{ marginRight: 2, fontWeight: 300 }}>
             Logado como {ApiClient.currentUser()}
           </Typography>
-          <Button color="inherit" onClick={handleLogout}>
-            Logout
+          <Button color="inherit" onClick={handleLogout} size='small'>
+            Sair
           </Button>
         </Box>
       </Toolbar>
