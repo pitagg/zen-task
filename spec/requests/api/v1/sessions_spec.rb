@@ -20,7 +20,7 @@ RSpec.describe "Sessions", type: :request do
 
   describe 'POST /login' do
     context 'when request is valid' do
-      before { post '/login', params: valid_credentials, headers: headers }
+      before { post '/api/v1/login', params: valid_credentials, headers: headers }
 
       it 'returns an authentication token' do
         expect(json_body['token']).not_to be_nil
@@ -32,7 +32,7 @@ RSpec.describe "Sessions", type: :request do
     end
 
     context 'when request is invalid' do
-      before { post '/login', params: invalid_credentials, headers: headers }
+      before { post '/api/v1/login', params: invalid_credentials, headers: headers }
 
       it 'returns a failure message' do
         expect(json_body['error']).to match(/Invalid email or password/)
@@ -48,7 +48,7 @@ RSpec.describe "Sessions", type: :request do
     let(:valid_token) { JwtService.encode(user_id: user.id) }
 
     describe "when the token is valid" do
-      before { get '/me', headers: { Authorization: valid_token } }
+      before { get '/api/v1/me', headers: { Authorization: valid_token } }
 
       it "returns the logged user data" do
         expect(json_body).to eq(user.slice(:name, :email))
@@ -60,7 +60,7 @@ RSpec.describe "Sessions", type: :request do
     end
 
     describe "when the token is invalid" do
-      before { get '/me', headers: { Authorization: "invalid_token" } }
+      before { get '/api/v1/me', headers: { Authorization: "invalid_token" } }
 
       it 'returns a failure message' do
         expect(json_body['error']).to match(/Unauthorized!/)

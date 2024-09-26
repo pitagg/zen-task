@@ -38,15 +38,36 @@ Things you may want to cover:
 - Route /me to check logged user data (GET /me with header Authorization + JWT).
 - JWT expires in 24 hours.
 - Activity end_date is updated to the current date when it's marked as completed.
+- API versioning: `/api/v1/...`.
 
 ## Setup
 
+### Back-end
+
+**Install dependencies:**
+
 `bundle install`
+
+**Setup database:**
 
 `bundle exec rails db:prepare` to create the database, apply schema and run seeds.
 
 > [!TIP]
 > `db:prepare` is idempotent, so it will only perform the necessary tasks once. If a reset is necessary, use `db:setup` instead, which will cleanup and rebuild the database. Use it carefully!
+
+**Master Key:**
+
+For security reasons the file `credentials.yml` is encrypted with a secret master key, which must be in the `/config` folder. It obviously is not staged in the repo, so if you didn't receive the file, just ask for it.
+
+After saving the master key in the config folder, the following code must successfully decript and open `credentials.yml` for edition. It's a good way to make sure it's all set.
+
+`VISUAL="code --wait" bundle exec rails credentials:edit`
+
+Note: Replace `code` with your preferred editor.
+
+### Front-end
+
+`npm install`
 
 
 ## Development Flow
@@ -65,3 +86,11 @@ RSpec Style Guides: https://github.com/rubocop/rspec-style-guide
 
 **Run tests (coverage by default):** `bundle exec rspec`
 **Run tests without code coverage:** `COVERAGE=false bundle exec rspec`
+
+
+## TODOs and Future implementations
+
+- Migrate to PostgreSQL;
+- Write frontend and integration tests;
+- UI/UX improvements;
+- Setup front build and complete deploy;

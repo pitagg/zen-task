@@ -11,7 +11,7 @@ RSpec.describe "Activities", type: :request do
 
   describe 'GET /projects/:project_id/activities' do
     context "when the user is authenticated" do
-      before { get "/projects/#{project.id}/activities", headers: valid_headers }
+      before { get "/api/v1/projects/#{project.id}/activities", headers: valid_headers }
 
       it 'returns all activities' do
         expect(json_body.size).to eq(5)
@@ -23,7 +23,7 @@ RSpec.describe "Activities", type: :request do
     end
 
     context 'when the project does not exist' do
-      before { get "/projects/0/activities", headers: valid_headers }
+      before { get "/api/v1/projects/0/activities", headers: valid_headers }
 
       it 'returns a not found message' do
         expect(response.body).to match(/Project not found/)
@@ -35,14 +35,14 @@ RSpec.describe "Activities", type: :request do
     end
 
     context 'when the user is not authenticated' do
-      before { get "/projects/#{project.id}/activities", headers: invalid_headers }
+      before { get "/api/v1/projects/#{project.id}/activities", headers: invalid_headers }
       it_behaves_like :unauthenticated
     end
   end
 
   describe 'GET /projects/:project_id/activities/:id' do
     context "when the user is authenticated" do
-      before { get "/projects/#{project.id}/activities/#{activity_id}",
+      before { get "/api/v1/projects/#{project.id}/activities/#{activity_id}",
         headers: valid_headers }
 
       context 'when the activity exists' do
@@ -69,7 +69,7 @@ RSpec.describe "Activities", type: :request do
     end
 
     context 'when the user is not authenticated' do
-      before { get "/projects/#{project.id}/activities/#{activity_id}",
+      before { get "/api/v1/projects/#{project.id}/activities/#{activity_id}",
         headers: invalid_headers }
       it_behaves_like :unauthenticated
     end
@@ -80,7 +80,7 @@ RSpec.describe "Activities", type: :request do
       fields = [ :name, :start_date, :end_date, :completed ]
       build(:activity, name: "New Activity").slice(*fields).to_json
     end
-    let(:post_path) { "/projects/#{project.id}/activities" }
+    let(:post_path) { "/api/v1/projects/#{project.id}/activities" }
 
     context "when the user is authenticated" do
       context 'when the request is valid' do
@@ -118,7 +118,7 @@ RSpec.describe "Activities", type: :request do
 
   describe 'PATCH /projects/:project_id/activities/:id' do
     let(:valid_attributes) { { name: 'Updated Activity' }.to_json }
-    let(:patch_path) { "/projects/#{project.id}/activities/#{activity_id}" }
+    let(:patch_path) { "/api/v1/projects/#{project.id}/activities/#{activity_id}" }
 
     context "when the user is authenticated" do
       context 'when the activity exists' do
@@ -167,7 +167,7 @@ RSpec.describe "Activities", type: :request do
   end
 
   describe 'DELETE /projects/:project_id/activities/:id' do
-    let(:delete_path) { "/projects/#{project.id}/activities/#{activity_id}" }
+    let(:delete_path) { "/api/v1/projects/#{project.id}/activities/#{activity_id}" }
 
     context "when the user is authenticated" do
       before { delete delete_path, headers: valid_headers }
