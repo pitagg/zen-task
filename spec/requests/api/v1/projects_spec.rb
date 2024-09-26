@@ -65,7 +65,10 @@ RSpec.describe "Projects", type: :request do
 
     context "when the user is authenticated" do
       context 'when the request is valid' do
-        before { post '/api/v1/projects', params: valid_attributes, headers: valid_headers }
+        before { post '/api/v1/projects',
+          params: valid_attributes,
+          headers: valid_headers
+      }
 
         it 'creates a project' do
           expect(json_body['name']).to eq('New Project')
@@ -94,7 +97,10 @@ RSpec.describe "Projects", type: :request do
     end
 
     context 'when the user is not authenticated' do
-      before { post '/api/v1/projects', params: valid_attributes, headers: invalid_headers }
+      before { post '/api/v1/projects',
+        params: valid_attributes,
+        headers: invalid_headers
+      }
       it_behaves_like :unauthenticated
     end
   end
