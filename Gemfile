@@ -29,7 +29,7 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 # Use Rack CORS for making cross-origin Ajax possible
-# gem "rack-cors"
+gem "rack-cors"
 
 # JWT authentication
 gem "jwt"
