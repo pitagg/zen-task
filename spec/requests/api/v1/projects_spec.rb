@@ -9,7 +9,7 @@ RSpec.describe "Projects", type: :request do
 
   describe "GET /projects" do
     context 'when the user is authenticated' do
-      before { get '/projects', headers: valid_headers }
+      before { get '/api/v1/projects', headers: valid_headers }
 
       it 'returns projects' do
         expect(json_body.size).to eq(5)
@@ -21,14 +21,14 @@ RSpec.describe "Projects", type: :request do
     end
 
     context 'when the user is not authenticated' do
-      before { get '/projects', headers: invalid_headers }
+      before { get '/api/v1/projects', headers: invalid_headers }
       it_behaves_like :unauthenticated
     end
   end
 
   describe 'GET /projects/:id' do
     context 'when the user is authenticated' do
-      before { get "/projects/#{project_id}", headers: valid_headers }
+      before { get "/api/v1/projects/#{project_id}", headers: valid_headers }
 
       it 'returns the project' do
         expect(json_body['id']).to eq(project_id)
@@ -40,7 +40,7 @@ RSpec.describe "Projects", type: :request do
 
       context 'when the project does not exist' do
         let(:project_id) { 0 }
-        before { get "/projects/#{project_id}", headers: valid_headers }
+        before { get "/api/v1/projects/#{project_id}", headers: valid_headers }
 
         it 'returns a not found message' do
           expect(response.body).to match(/Project not found/)
@@ -53,7 +53,7 @@ RSpec.describe "Projects", type: :request do
     end
 
     context 'when the user is not authenticated' do
-      before { get "/projects/#{project_id}", headers: invalid_headers }
+      before { get "/api/v1/projects/#{project_id}", headers: invalid_headers }
       it_behaves_like :unauthenticated
     end
   end
@@ -65,7 +65,7 @@ RSpec.describe "Projects", type: :request do
 
     context "when the user is authenticated" do
       context 'when the request is valid' do
-        before { post '/projects', params: valid_attributes, headers: valid_headers }
+        before { post '/api/v1/projects', params: valid_attributes, headers: valid_headers }
 
         it 'creates a project' do
           expect(json_body['name']).to eq('New Project')
@@ -79,7 +79,7 @@ RSpec.describe "Projects", type: :request do
       context "when the request is invalid" do
         before do
           invalid_params = { name: "", start_date: "", end_date: "" }.to_json
-          post '/projects', params: invalid_params, headers: valid_headers
+          post '/api/v1/projects', params: invalid_params, headers: valid_headers
         end
 
         it "returns the validations messages" do
@@ -94,7 +94,7 @@ RSpec.describe "Projects", type: :request do
     end
 
     context 'when the user is not authenticated' do
-      before { post '/projects', params: valid_attributes, headers: invalid_headers }
+      before { post '/api/v1/projects', params: valid_attributes, headers: invalid_headers }
       it_behaves_like :unauthenticated
     end
   end
@@ -105,7 +105,7 @@ RSpec.describe "Projects", type: :request do
     context "when the user is authenticated" do
       context 'when the project exists' do
         before do
-          patch "/projects/#{project_id}",
+          patch "/api/v1/projects/#{project_id}",
             params: valid_attributes,
             headers: valid_headers
         end
@@ -121,7 +121,7 @@ RSpec.describe "Projects", type: :request do
 
         context "when the request is invalid" do
           before do
-            patch "/projects/#{project_id}",
+            patch "/api/v1/projects/#{project_id}",
               params: { name: "" }.to_json,
               headers: valid_headers
           end
@@ -139,7 +139,7 @@ RSpec.describe "Projects", type: :request do
       context 'when the project does not exist' do
         let(:project_id) { 0 }
         before do
-          patch "/projects/#{project_id}",
+          patch "/api/v1/projects/#{project_id}",
             params: valid_attributes,
             headers: valid_headers
         end
@@ -156,7 +156,7 @@ RSpec.describe "Projects", type: :request do
 
     context 'when the user is not authenticated' do
       before do
-        patch "/projects/#{project_id}",
+        patch "/api/v1/projects/#{project_id}",
           params: valid_attributes,
           headers: invalid_headers
       end
@@ -166,7 +166,7 @@ RSpec.describe "Projects", type: :request do
 
   describe 'DELETE /projects/:id' do
     context 'when the project exists and the user is authenticated' do
-      before { delete "/projects/#{project_id}", headers: valid_headers }
+      before { delete "/api/v1/projects/#{project_id}", headers: valid_headers }
 
       it 'deletes the project' do
         expect(Project.find_by(id: project_id)).to be_nil
@@ -179,7 +179,7 @@ RSpec.describe "Projects", type: :request do
 
     context 'when the project does not exist' do
       let(:project_id) { 0 }
-      before { delete "/projects/#{project_id}", headers: valid_headers }
+      before { delete "/api/v1/projects/#{project_id}", headers: valid_headers }
 
       it 'returns a not found message' do
         expect(response.body).to match(/Project not found/)
@@ -191,7 +191,7 @@ RSpec.describe "Projects", type: :request do
     end
 
     context 'when the user is not authenticated' do
-      before { delete "/projects/#{project_id}", headers: invalid_headers }
+      before { delete "/api/v1/projects/#{project_id}", headers: invalid_headers }
       it_behaves_like :unauthenticated
     end
   end

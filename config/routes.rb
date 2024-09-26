@@ -12,10 +12,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  post "/login", to: "sessions#create"
-  get "/me", to: "sessions#show"
-
-  resources :projects do
-    resources :activities
+  namespace :api do
+    namespace :v1 do
+      post "/login", to: "sessions#create"
+      get "/me", to: "sessions#show"
+      resources :projects do
+        resources :activities
+      end
+    end
   end
 end

@@ -1,4 +1,4 @@
-class ActivitiesController < ApplicationController
+class Api::V1::ActivitiesController < Api::V1::ApplicationController
   before_action :authorize_request
   before_action :set_project
   before_action :set_activity, only: [ :show, :update, :destroy ]

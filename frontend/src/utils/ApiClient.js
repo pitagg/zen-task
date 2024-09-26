@@ -1,4 +1,5 @@
 class ApiClient {
+  // TODO: It must be configured by environment.
   baseURL = "http://localhost:3000/api/v1/"
 
   defaultHeaders() {

@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class Api::V1::SessionsController < Api::V1::ApplicationController
   before_action :authorize_request, only: :show
 
   def create
