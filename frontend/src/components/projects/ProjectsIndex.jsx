@@ -170,7 +170,12 @@ const ProjectsIndex = () => {
         onClose={() => setDrawerOpen(false)}
       >
         {drawerComponent === 'show' && selectedProject && (
-          <ProjectShow project={selectedProject} />
+          <ProjectShow
+            project={selectedProject}
+            open={drawerOpen}
+            onClose={() => setDrawerOpen(false)}
+            onUpdate={handleUpdateProject}
+          />
         )}
         {drawerComponent === 'edit' && selectedProject && (
           <ProjectEdit

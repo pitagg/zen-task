@@ -71,6 +71,10 @@ class ApiClient {
     return this.get('projects');
   }
 
+  getProject(id) {
+    return this.get(`projects/${id}`);
+  }
+
   createProject(body) {
     return this.post(`projects`, body);
   }
@@ -81,6 +85,18 @@ class ApiClient {
 
   deleteProject(id) {
     return this.delete(`projects/${id}`);
+  }
+
+  getActivities(projectId) {
+    return this.get(`projects/${projectId}/activities`);
+  }
+
+  updateActivity(projectId, id, body) {
+    return this.patch(`projects/${projectId}/activities/${id}`, body);
+  }
+
+  createActivity(projectId, body) {
+    return this.post(`projects/${projectId}/activities/`, body);
   }
 }
 

@@ -61,7 +61,7 @@ const ProjectNew = ({ open, onClose, onCreate }) => {
 
         <form onSubmit={handleSubmit}>
           <TextField
-            label="Name"
+            label="Nome"
             value={name}
             onChange={(e) => setName(e.target.value)}
             fullWidth
@@ -69,7 +69,7 @@ const ProjectNew = ({ open, onClose, onCreate }) => {
             required
           />
           <TextField
-            label="Start Date"
+            label="Data de Início"
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
@@ -79,7 +79,7 @@ const ProjectNew = ({ open, onClose, onCreate }) => {
             required
           />
           <TextField
-            label="End Date"
+            label="Data de Fim"
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
@@ -90,10 +90,10 @@ const ProjectNew = ({ open, onClose, onCreate }) => {
           />
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
             <Button onClick={onClose} variant="outlined" color="secondary">
-              Cancel
+              Cancelar
             </Button>
             <Button type="submit" variant="contained" color="primary">
-              Create
+              Criar
             </Button>
           </Box>
         </form>

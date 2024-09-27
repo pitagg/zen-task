@@ -50,7 +50,7 @@ const ProjectEdit = ({ open, onClose, project, onUpdate }) => {
     <Drawer anchor="right" open={open} onClose={onClose}>
       <Box sx={{ width: 400, p: 4 }}>
         <Typography variant="h5" gutterBottom>
-          Edit Project
+          Alterar Projeto
         </Typography>
 
         {errors.length > 0 && (
@@ -70,7 +70,7 @@ const ProjectEdit = ({ open, onClose, project, onUpdate }) => {
 
         <form onSubmit={handleSubmit}>
           <TextField
-            label="Name"
+            label="Nome"
             value={name}
             onChange={(e) => setName(e.target.value)}
             fullWidth
@@ -78,7 +78,7 @@ const ProjectEdit = ({ open, onClose, project, onUpdate }) => {
             required
           />
           <TextField
-            label="Start Date"
+            label="Data de Início"
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
@@ -88,7 +88,7 @@ const ProjectEdit = ({ open, onClose, project, onUpdate }) => {
             required
           />
           <TextField
-            label="End Date"
+            label="Data de Fim"
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
@@ -99,10 +99,10 @@ const ProjectEdit = ({ open, onClose, project, onUpdate }) => {
           />
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
             <Button onClick={onClose} variant="outlined" color="secondary">
-              Cancel
+              Cancelar
             </Button>
             <Button type="submit" variant="contained" color="primary">
-              Save
+              Gravar
             </Button>
           </Box>
         </form>
