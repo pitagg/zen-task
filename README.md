@@ -1,10 +1,10 @@
 # Zen Task
-The simple project management tool. :)
+The simpler project management tool. :)
 
 [![CI](https://github.com/pitagg/zen-task/actions/workflows/ci.yml/badge.svg)](https://github.com/pitagg/zen-task/actions/workflows/ci.yml)
 
-> [!IMPORTANT]
-> This project is still in progress. Feel free to explore it, be patient though.
+> [!TIP]
+> Prefere ler em português? Acesse o [LEIA-ME](/docs/pt/LEIA-ME.md).
 
 
 ## Setup and running
@@ -18,6 +18,7 @@ To set the project up, clone the respository, open the folder `zen-task`in your 
 
 **Setup database:**
 
+Just because of the simple nature of this project, it's running on SQLite3 for now.
 Beyond the migrations, some seeds where implemented so you don't need to wast time creating records in the database.
 To setup the database, just run `bundle exec rails db:prepare` to create the database, apply schema and run all seeds.
 
@@ -39,7 +40,8 @@ VISUAL="code --wait" bundle exec rails credentials:edit
 
 **Start server**
 
-All set! Just run `bundle exec rails s` to start the server. Check out the Thunder/Postam request collections at `docs/api-requests/` to get usage examples of the API.
+All set! Just run `bundle exec rails s` to start the server.
+Check out the Thunder/Postam request collections at `docs/api-requests/` to get usage examples of the API.
 
 
 ### Front-end
@@ -63,7 +65,7 @@ This is a quick explanation of the development flow adopted during this project 
 
 ### Commits
 
-Commit messages must follow the Conventional Commits: https://www.conventionalcommits.org.
+Commit messages must follow the [Conventional Commits](https://www.conventionalcommits.org).
 The squash commits, when merging the PRs, must follow the same rules.
 
 ## Code Quality
@@ -71,15 +73,16 @@ The squash commits, when merging the PRs, must follow the same rules.
 This project uses RSpec, FactoryBot and SimpleCov to ensure tha everything is working well.
 For now, the line coverage is 100% which is great, but a litle decreasing can be accepted if a good reason arises.
 
+It also uses Rubocop to keep a clean and consistent code styling.
 RSpec Style Guides: https://github.com/rubocop/rspec-style-guide
 
 **Run tests with coverage:**
 
-Coverage is active by default, so just run `bundle exec rspec` to run all tests and generate the coverage report.
+The SimpleCov is active by default, so just run `bundle exec rspec` to perform all tests and generate the coverage report.
 After complete it, just open the `/coverage/index.html` in your brower to see the report.
 
 
-**Run tests without code coverage:**
+**Run tests without code coverage report:**
 
 To disable the SimpleCov report, just pass the env `COVERAGE=false` to the rspec command: `COVERAGE=false bundle exec rspec`.
 
