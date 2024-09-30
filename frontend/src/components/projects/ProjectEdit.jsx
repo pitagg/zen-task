@@ -9,9 +9,8 @@ import {
   ListItem,
   ListItemText
 } from '@mui/material';
-import ApiClient from '../../utils/ApiClient';
 
-const ProjectEdit = ({ open, onClose, project, onUpdate }) => {
+const ProjectEdit = ({ open, onClose, project, onUpdate, apiClient }) => {
   const [name, setName] = useState(project?.name || '');
   const [startDate, setStartDate] = useState(project?.start_date || '');
   const [endDate, setEndDate] = useState(project?.end_date || '');
@@ -29,7 +28,7 @@ const ProjectEdit = ({ open, onClose, project, onUpdate }) => {
     e.preventDefault();
 
     try {
-      const { responseOk, data, status } = await ApiClient.updateProject(
+      const { responseOk, data, status } = await apiClient.updateProject(
         project.id, {
         name,
         start_date: startDate,

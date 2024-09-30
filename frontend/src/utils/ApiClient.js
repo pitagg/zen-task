@@ -1,6 +1,13 @@
+import ResponseError from './ResponseError';
+
 class ApiClient {
   // TODO: It must be configured by environment.
   baseURL = "http://localhost:3000/api/v1/"
+
+  constructor({ isAuth, setIsAuth }) {
+    this.isAuth = isAuth;
+    this.setIsAuth = setIsAuth;
+  }
 
   defaultHeaders() {
     const token = localStorage.getItem('token');
@@ -19,6 +26,10 @@ class ApiClient {
     });
     // Prevent JSON parsing error on status 204 (No Content)
     const data = response.status === 204 ? {} : await response.json();
+
+    if (response.status === 401) this.logout();
+    if (!response.ok) throw new ResponseError(response, data);
+
     const { status, statusText, responseOk = response.ok } = response;
     return {responseOk, data, status, statusText, response};
   }
@@ -46,6 +57,7 @@ class ApiClient {
       localStorage.setItem('token', data.token);
       const { name } = (await this.getUserData()).data
       localStorage.setItem('userName', name);
+      this.setIsAuth(true)
     }
     return response;
   }
@@ -53,14 +65,11 @@ class ApiClient {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');
+    this.setIsAuth(false);
   }
 
   async getUserData() {
     return this.get('me');
-  }
-
-  isAuthenticated() {
-    return !!localStorage.getItem('token');
   }
 
   currentUser() {
@@ -100,4 +109,4 @@ class ApiClient {
   }
 }
 
-export default new ApiClient()
+export default ApiClient

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, IconButton, TextField, Typography, Checkbox, Table, TableBody, TableCell, TableContainer, TableRow, Paper, Tooltip } from "@mui/material";
 import { Check, Edit, Delete, Cancel } from "@mui/icons-material";
-import ApiClient from "../../utils/ApiClient";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
-const ProjectShow = ({ project, onUpdate }) => {
+const ProjectShow = ({ project, onUpdate, apiClient }) => {
   const blankFormData = {
     name: "",
     start_date: "",
@@ -22,7 +21,7 @@ const ProjectShow = ({ project, onUpdate }) => {
   const fetchActivities = async () => {
     try {
       if (project) {
-        const { data } = await ApiClient.getActivities(project.id);
+        const { data } = await apiClient.getActivities(project.id);
         setActivities(data);
       }
     } catch (error) {
@@ -37,17 +36,17 @@ const ProjectShow = ({ project, onUpdate }) => {
 
   const handleSubmit = async () => {
     if (editingActivityId) {
-      await ApiClient.updateActivity(project.id, editingActivityId, formData);
+      await apiClient.updateActivity(project.id, editingActivityId, formData);
     } else {
-      await ApiClient.createActivity(project.id, formData);
+      await apiClient.createActivity(project.id, formData);
     }
     refreshProjectActivities();
     clearForm();
   };
 
   const refreshProjectActivities = async () => {
-    const projectResponse = await ApiClient.getProject(project.id);
-    const activitiesResponse = await ApiClient.getActivities(project.id);
+    const projectResponse = await apiClient.getProject(project.id);
+    const activitiesResponse = await apiClient.getActivities(project.id);
     onUpdate(projectResponse.data);
     setActivities(activitiesResponse.data);
   };
@@ -68,13 +67,13 @@ const ProjectShow = ({ project, onUpdate }) => {
 
   const handleDeleteClick = async (activityId) => {
     if (window.confirm("Tem certeza que quer excluir a atividade?")) {
-      await ApiClient.deleteActivity(activityId);
+      await apiClient.deleteActivity(activityId);
       refreshProjectActivities();
     }
   };
 
   const handleCompleteToggle = async (activity) => {
-    await ApiClient.updateActivity(project.id, activity.id, { completed: !activity.completed });
+    await apiClient.updateActivity(project.id, activity.id, { completed: !activity.completed });
     refreshProjectActivities();
   };
 

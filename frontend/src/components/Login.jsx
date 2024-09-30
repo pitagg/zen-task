@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
-import ApiClient from '../utils/ApiClient'
 
-const Login = () => {
+const Login = ({ apiClient }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -12,18 +11,13 @@ const Login = () => {
   const handleLogin = async (element) => {
     element.preventDefault();
     try {
-      const { responseOk, data, status } = await ApiClient.login(
-        email,
-        password
-      );
-      if (!responseOk) throw new Error(`Erro ${status}: ${data.error}`);
-
-      navigate('/projects');
+      const { responseOk, data, status } = await apiClient.login(email, password);
       setError('')
+      navigate('/projects');
       console.log('Logado! ', data.token);
     } catch (error) {
       setError('E-mail ou senha incorretos');
-      console.error(error.message);
+      console.error(error);
     }
   };
 

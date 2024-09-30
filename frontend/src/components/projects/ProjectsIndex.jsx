@@ -17,20 +17,21 @@ import {
 } from '@mui/material';
 import { Edit, Delete, Warning } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
-import ApiClient from '../../utils/ApiClient';
 import Header from '../Header';
 import ProjectShow from "./ProjectShow";
 import ProjectEdit from "./ProjectEdit";
 import ProjectNew from "./ProjectNew";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { useNavigate } from 'react-router-dom';
 
 
-const ProjectsIndex = () => {
+const ProjectsIndex = ({ apiClient }) => {
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerComponent, setDrawerComponent] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProjects();
@@ -38,7 +39,7 @@ const ProjectsIndex = () => {
 
   const fetchProjects = async () => {
     try {
-      const response = await ApiClient.getProjects();
+      const response = await apiClient.getProjects();
       setProjects(response.data);
     } catch (error) {
       console.error('Error fetching projects:', error);
@@ -66,7 +67,7 @@ const ProjectsIndex = () => {
   const handleDelete = async (projectId) => {
     if (window.confirm('Tem certeza que quer excluir o projeto?')) {
       try {
-        await ApiClient.deleteProject(projectId);
+        await apiClient.deleteProject(projectId);
         setProjects(projects.filter((project) => project.id !== projectId));
       } catch (error) {
         console.error('Error deleting project:', error);
@@ -96,7 +97,7 @@ const ProjectsIndex = () => {
 
   return (
     <div>
-      <Header />
+      <Header apiClient={ apiClient } />
       <Box sx={{ p: 3 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
           <Typography variant="h4">Projetos</Typography>
@@ -175,6 +176,7 @@ const ProjectsIndex = () => {
             open={drawerOpen}
             onClose={() => setDrawerOpen(false)}
             onUpdate={handleUpdateProject}
+            apiClient={apiClient}
           />
         )}
         {drawerComponent === 'edit' && selectedProject && (
@@ -183,6 +185,7 @@ const ProjectsIndex = () => {
             open={drawerOpen}
             onClose={() => setDrawerOpen(false)}
             onUpdate={handleUpdateProject}
+            apiClient={apiClient}
           />
         )}
         {drawerComponent === 'new' && selectedProject && (
@@ -190,6 +193,7 @@ const ProjectsIndex = () => {
             open={drawerOpen}
             onClose={() => setDrawerOpen(false)}
             onCreate={handleCreateProject}
+            apiClient={apiClient}
           />
         )}
       </Drawer>
