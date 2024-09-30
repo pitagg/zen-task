@@ -1,7 +1,7 @@
 class Activity < ApplicationRecord
   belongs_to :project
   belongs_to :user
-  validates_presence_of :name, :start_date, :end_date, :user
+  validates_presence_of :user, :name, :start_date
   validates :end_date, comparison: { greater_than_or_equal_to: :start_date }
 
   after_save :update_project_completion, :update_project_completion_date

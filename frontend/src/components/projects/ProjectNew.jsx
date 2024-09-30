@@ -20,7 +20,7 @@ const ProjectNew = ({ open, onClose, onCreate, apiClient }) => {
     e.preventDefault();
 
     try {
-      const { responseOk, data, status } = await apiClient.createProject({
+      const { data } = await apiClient.createProject({
         name,
         start_date: startDate,
         end_date: endDate,

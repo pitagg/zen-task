@@ -1,5 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Box, IconButton, TextField, Typography, Checkbox, Table, TableBody, TableCell, TableContainer, TableRow, Paper } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  TextField,
+  Typography,
+  Checkbox,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+  List,
+  ListItem,
+  ListItemText,
+  Tooltip
+} from "@mui/material";
 import { Check, Edit, Delete, Cancel } from "@mui/icons-material";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
@@ -12,6 +28,7 @@ const ProjectShow = ({ project, onUpdate, apiClient }) => {
   const [endDate, setEndDate] = useState("");
   const [name, setName] = useState("");
   const [editingActivityId, setEditingActivityId] = useState(null);
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     fetchActivities();
@@ -40,8 +57,20 @@ const ProjectShow = ({ project, onUpdate, apiClient }) => {
       clearForm();
     } catch (error) {
       const { response, data } = error;
-      window.alert(`Erro ${error.response?.status}`);
-      console.log(error);
+
+      switch (response?.status) {
+        case 422:
+          setErrors(data.errors || []);
+          break;
+
+        default:
+          if (data?.error) {
+            setErrors([`Erro ${response?.status}: ${data.error}`]);
+          } else {
+            setErrors(['Erro no servidor. Não foi possível processar a requisição.']);
+          }
+          break;
+      }
     }
   };
 
@@ -57,6 +86,7 @@ const ProjectShow = ({ project, onUpdate, apiClient }) => {
     setStartDate("");
     setEndDate("");
     setEditingActivityId(null);
+    setErrors([]);
   };
 
   const handleEditClick = (activity) => {
@@ -92,6 +122,22 @@ const ProjectShow = ({ project, onUpdate, apiClient }) => {
           <Typography variant="subtitle1">{
             editingActivityId ? 'Atualizar atividade' : 'Criar atividade'
           }</Typography>
+
+          {errors.length > 0 && (
+            <Box sx={{ mb: 2 }}>
+              <Typography color="error" variant="body1" gutterBottom>
+                Não foi possível gravar. Corrija os seguintes errors:
+              </Typography>
+              <List>
+                {errors.map((error, index) => (
+                  <ListItem key={index}>
+                    <ListItemText primary={error} />
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
+          )}
+
           <TextField
             label="Nome"
             name="name"
@@ -102,13 +148,25 @@ const ProjectShow = ({ project, onUpdate, apiClient }) => {
             InputProps={{
               endAdornment: (
                 <>
-                  <IconButton onClick={handleSubmit}>
-                    <Check />
-                  </IconButton>
-                  {editingActivityId && (
-                    <IconButton onClick={clearForm}>
-                      <Cancel />
+                  <Tooltip title={
+                    editingActivityId
+                      ? "Gravar alterações"
+                      : "Criar nova atividade"}
+                  >
+                    <IconButton onClick={handleSubmit}>
+                      <Check />
                     </IconButton>
+                  </Tooltip>
+                  {(editingActivityId || errors.length > 0 ) && (
+                    <Tooltip title={
+                      editingActivityId
+                        ? "Cancelar alterações"
+                        : "Descartar nova atividade"}
+                    >
+                      <IconButton onClick={clearForm}>
+                        <Cancel />
+                      </IconButton>
+                    </Tooltip>
                   )}
                 </>
               ),
