@@ -9,9 +9,8 @@ import {
   ListItem,
   ListItemText
 } from '@mui/material';
-import ApiClient from '../../utils/ApiClient';
 
-const ProjectNew = ({ open, onClose, onCreate }) => {
+const ProjectNew = ({ open, onClose, onCreate, apiClient }) => {
   const [name, setName] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -21,19 +20,29 @@ const ProjectNew = ({ open, onClose, onCreate }) => {
     e.preventDefault();
 
     try {
-      const { responseOk, data, status } = await ApiClient.createProject({
+      const { data } = await apiClient.createProject({
         name,
         start_date: startDate,
         end_date: endDate,
       });
-
-      if (status === 422) return setErrors(data.errors);
-      if (!responseOk) throw new Error(`Erro ${status}: ${data.error}`);
-
       onCreate(data);
       onClose();
     } catch (error) {
-      setErrors([error.message]);
+      const { response, data } = error;
+
+      switch (response?.status) {
+        case 422:
+          setErrors(data.errors || []);
+          break;
+
+        default:
+          if (data?.error) {
+            setErrors([`Erro ${response?.status}: ${data.error}`]);
+          } else {
+            setErrors(['Erro no servidor. Não foi possível processar a requisição.']);
+          }
+          break;
+      }
     }
   };
 
@@ -61,7 +70,7 @@ const ProjectNew = ({ open, onClose, onCreate }) => {
 
         <form onSubmit={handleSubmit}>
           <TextField
-            label="Name"
+            label="Nome"
             value={name}
             onChange={(e) => setName(e.target.value)}
             fullWidth
@@ -69,7 +78,7 @@ const ProjectNew = ({ open, onClose, onCreate }) => {
             required
           />
           <TextField
-            label="Start Date"
+            label="Data de Início"
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
@@ -79,7 +88,7 @@ const ProjectNew = ({ open, onClose, onCreate }) => {
             required
           />
           <TextField
-            label="End Date"
+            label="Data de Fim"
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
@@ -90,10 +99,10 @@ const ProjectNew = ({ open, onClose, onCreate }) => {
           />
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
             <Button onClick={onClose} variant="outlined" color="secondary">
-              Cancel
+              Cancelar
             </Button>
             <Button type="submit" variant="contained" color="primary">
-              Create
+              Criar
             </Button>
           </Box>
         </form>

@@ -1,6 +1,16 @@
+import ResponseError from './ResponseError';
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+
+
 class ApiClient {
   // TODO: It must be configured by environment.
   baseURL = "http://localhost:3000/api/v1/"
+
+  constructor({ isAuth, setIsAuth }) {
+    this.isAuth = isAuth;
+    this.setIsAuth = setIsAuth;
+  }
 
   defaultHeaders() {
     const token = localStorage.getItem('token');
@@ -19,6 +29,10 @@ class ApiClient {
     });
     // Prevent JSON parsing error on status 204 (No Content)
     const data = response.status === 204 ? {} : await response.json();
+
+    if (response.status === 401) this.logout();
+    if (!response.ok) throw new ResponseError(response, data);
+
     const { status, statusText, responseOk = response.ok } = response;
     return {responseOk, data, status, statusText, response};
   }
@@ -46,6 +60,7 @@ class ApiClient {
       localStorage.setItem('token', data.token);
       const { name } = (await this.getUserData()).data
       localStorage.setItem('userName', name);
+      this.setIsAuth(true)
     }
     return response;
   }
@@ -53,14 +68,11 @@ class ApiClient {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');
+    this.setIsAuth(false);
   }
 
   async getUserData() {
     return this.get('me');
-  }
-
-  isAuthenticated() {
-    return !!localStorage.getItem('token');
   }
 
   currentUser() {
@@ -69,6 +81,10 @@ class ApiClient {
 
   getProjects() {
     return this.get('projects');
+  }
+
+  getProject(id) {
+    return this.get(`projects/${id}`);
   }
 
   createProject(body) {
@@ -82,6 +98,27 @@ class ApiClient {
   deleteProject(id) {
     return this.delete(`projects/${id}`);
   }
+
+  getActivities(projectId) {
+    return this.get(`projects/${projectId}/activities`);
+  }
+
+  updateActivity(projectId, id, body) {
+    return this.patch(`projects/${projectId}/activities/${id}`, body);
+  }
+
+  createActivity(projectId, body) {
+    return this.post(`projects/${projectId}/activities/`, body);
+  }
+
+  deleteActivity(projectId, id) {
+    return this.delete(`projects/${projectId}/activities/${id}`);
+  }
+
+  // TODO: Move it to a helper module.
+  formatDate(date) {
+    return format(new Date(date), "dd/MM/yyyy", { locale: ptBR });
+  }
 }
 
-export default new ApiClient()
+export default ApiClient

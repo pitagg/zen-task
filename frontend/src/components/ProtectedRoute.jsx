@@ -1,9 +1,8 @@
 import { Navigate, useLocation } from 'react-router-dom';
-import ApiClient from '../utils/ApiClient';
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ apiClient, children }) => {
   const location = useLocation();
-  if (!ApiClient.isAuthenticated()) {
+  if (!apiClient.isAuth) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
   return children;

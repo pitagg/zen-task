@@ -1,37 +1,38 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import ApiClient from '../utils/ApiClient';
 import Login from "./Login";
 import ProtectedRoute from "./ProtectedRoute";
 import ProjectsIndex from "./projects/ProjectsIndex";
 import ProjectShow from "./projects/ProjectShow";
 import ProjectEdit from "./projects/ProjectEdit";
-import ActivityEdit from "./projects/ActivityEdit";
 
-const isAuthenticated = ApiClient.isAuthenticated;
-
-const Routing = () => {
+const Routing = ({ apiClient }) => {
   return (<>
     <Routes>
       <Route path="/" element={
-        <Navigate to={isAuthenticated() ? '/projects' : '/login'} replace />
+        <Navigate to={apiClient.isAuth ? '/projects' : '/login'} replace />
       } />
 
       {/* Public routes */}
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<Login apiClient={ apiClient } />} />
 
       {/* Private routes */}
       <Route path="/projects" element={
-        <ProtectedRoute><ProjectsIndex /></ProtectedRoute>
+        <ProtectedRoute apiClient={ apiClient }>
+          <ProjectsIndex apiClient={ apiClient }/>
+        </ProtectedRoute>
       } />
-      <Route path="/project/:projectId" element={
-        <ProtectedRoute><ProjectShow /></ProtectedRoute>
+
+      {/* TODO: Handle show and edit routes. */}
+      {/* <Route path="/projects/:projectId" element={
+        <ProtectedRoute>
+          <ProjectShow apiClient={ apiClient }/>
+        </ProtectedRoute>
       } />
-      <Route path="/project/:projectId/edit" element={
-        <ProtectedRoute><ProjectEdit /></ProtectedRoute>
-      } />
-      <Route path="/project/:projectId/activities/:activityId/edit" element={
-        <ProtectedRoute><ActivityEdit /></ProtectedRoute>
-      } />
+      <Route path="/projects/:projectId/edit" element={
+        <ProtectedRoute>
+          <ProjectEdit apiClient={ apiClient }/>
+        </ProtectedRoute>
+      } /> */}
 
       {/* Catch undefined paths */}
       <Route path="*" element={<Navigate to="/" />} />

@@ -1,16 +1,17 @@
 import './App.css';
-import ApiClient from './utils/ApiClient';
-import Header from './components/Header'
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routing from './components/Routing';
-
-const isAuthenticated = ApiClient.isAuthenticated;
+import ApiClient from './utils/ApiClient';
+import { useState } from 'react';
 
 function App() {
+  const [isAuth, setIsAuth] = useState(!!localStorage.getItem('token'))
+  const apiClient = new ApiClient({ isAuth, setIsAuth })
+
   return (
     <Router>
       <div className="App">
-        <Routing />
+        <Routing apiClient={ apiClient } />
       </div>
     </Router>
   );

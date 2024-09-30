@@ -12,22 +12,24 @@ import {
   Paper,
   IconButton,
   Drawer,
+  Tooltip,
+  LinearProgress
 } from '@mui/material';
-import { Edit, Delete, Add } from '@mui/icons-material';
+import { Edit, Delete, Warning } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
-import ApiClient from '../../utils/ApiClient';
 import Header from '../Header';
 import ProjectShow from "./ProjectShow";
 import ProjectEdit from "./ProjectEdit";
 import ProjectNew from "./ProjectNew";
-import ActivityEdit from "./ActivityEdit";
+import { useNavigate } from 'react-router-dom';
 
 
-const ProjectsIndex = () => {
+const ProjectsIndex = ({ apiClient }) => {
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerComponent, setDrawerComponent] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProjects();
@@ -35,7 +37,7 @@ const ProjectsIndex = () => {
 
   const fetchProjects = async () => {
     try {
-      const response = await ApiClient.getProjects();
+      const response = await apiClient.getProjects();
       setProjects(response.data);
     } catch (error) {
       console.error('Error fetching projects:', error);
@@ -63,7 +65,7 @@ const ProjectsIndex = () => {
   const handleDelete = async (projectId) => {
     if (window.confirm('Tem certeza que quer excluir o projeto?')) {
       try {
-        await ApiClient.deleteProject(projectId);
+        await apiClient.deleteProject(projectId);
         setProjects(projects.filter((project) => project.id !== projectId));
       } catch (error) {
         console.error('Error deleting project:', error);
@@ -83,23 +85,25 @@ const ProjectsIndex = () => {
     fetchProjects();
   }
 
+  const isDelayed = (completion_date, end_date) => {
+    return new Date(completion_date) > new Date(end_date);
+  }
+
   return (
     <div>
-      <Header />
+      <Header apiClient={ apiClient } />
       <Box sx={{ p: 3 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-          <Typography variant="h4">Projects</Typography>
+          <Typography variant="h4">Projetos</Typography>
           <Button
             variant="contained"
             color="primary"
             startIcon={<AddIcon />}
             onClick={handleNew}
+            size='small'
           >
-            New Project
+            Novo
           </Button>
-          {/* <IconButton onClick={handleNew}>
-            <Delete />
-          </IconButton> */}
         </Box>
         <TableContainer component={Paper}>
           <Table>
@@ -108,30 +112,49 @@ const ProjectsIndex = () => {
                 <TableCell>Nome</TableCell>
                 <TableCell>Data de Início</TableCell>
                 <TableCell>Data de Fim</TableCell>
+                <TableCell>Prazo estimado</TableCell>
+                <TableCell>Progresso</TableCell>
                 <TableCell>Ações</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {projects.map((project) => (
-                <TableRow key={project.id}>
-                  <TableCell
-                    onClick={() => handleShow(project)}
-                    style={{ cursor: 'pointer', color: 'blue' }}
-                  >
-                    {project.name}
-                  </TableCell>
-                  <TableCell>{project.start_date}</TableCell>
-                  <TableCell>{project.end_date}</TableCell>
-                  <TableCell>
-                    <IconButton onClick={() => handleEdit(project)}>
-                      <Edit />
-                    </IconButton>
-                    <IconButton onClick={() => handleDelete(project.id)}>
-                      <Delete />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {projects.map((project) => {
+                const progress = project.completion * 100;
+
+                return (
+                  <TableRow key={project.id}>
+                    <TableCell
+                      onClick={() => handleShow(project)}
+                      style={{ cursor: 'pointer', color: 'blue' }}
+                    >
+                      {project.name}
+                    </TableCell>
+                    <TableCell>{apiClient.formatDate(project.start_date)}</TableCell>
+                    <TableCell>{apiClient.formatDate(project.end_date)}</TableCell>
+                    <TableCell>
+                      {apiClient.formatDate(project.completion_date)}
+                      {isDelayed(project.completion_date, project.end_date) && (
+                        <Tooltip title="Risco de atraso com base na previsão de entrega da última atividade.">
+                          <Warning color="error" style={{ marginLeft: 10 }} />
+                        </Tooltip>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      <Tooltip title={`${progress}%`}>
+                        <LinearProgress variant="determinate" value={project.completion * 100} />
+                      </Tooltip>
+                    </TableCell>
+
+                    <TableCell>
+                      <IconButton onClick={() => handleEdit(project)}>
+                        <Edit />
+                      </IconButton>
+                      <IconButton onClick={() => handleDelete(project.id)}>
+                        <Delete />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+              )})}
             </TableBody>
           </Table>
         </TableContainer>
@@ -142,7 +165,13 @@ const ProjectsIndex = () => {
         onClose={() => setDrawerOpen(false)}
       >
         {drawerComponent === 'show' && selectedProject && (
-          <ProjectShow project={selectedProject} />
+          <ProjectShow
+            project={selectedProject}
+            open={drawerOpen}
+            onClose={() => setDrawerOpen(false)}
+            onUpdate={handleUpdateProject}
+            apiClient={apiClient}
+          />
         )}
         {drawerComponent === 'edit' && selectedProject && (
           <ProjectEdit
@@ -150,6 +179,7 @@ const ProjectsIndex = () => {
             open={drawerOpen}
             onClose={() => setDrawerOpen(false)}
             onUpdate={handleUpdateProject}
+            apiClient={apiClient}
           />
         )}
         {drawerComponent === 'new' && selectedProject && (
@@ -157,6 +187,7 @@ const ProjectsIndex = () => {
             open={drawerOpen}
             onClose={() => setDrawerOpen(false)}
             onCreate={handleCreateProject}
+            apiClient={apiClient}
           />
         )}
       </Drawer>

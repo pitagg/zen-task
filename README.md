@@ -96,12 +96,19 @@ To disable the SimpleCov report, just pass the env `COVERAGE=false` to the rspec
 - API versioning: `/api/v1/...`. Requests examples at `docs/api-requests/` in both Thunder and Postam collections.
 
 
-## TODOs and Future implementations
+## Pending issues
 
-- Migrate to PostgreSQL;
-- Write frontend and integration tests;
+- Translate API validation and error messages.
+- User sign-up and account removal.
+- Handle edit and show routes (link to the project).
+- Write frontend and integration tests.
+- Configure frontend build and complete deploy.
+- Test of README and docs translation.
+
+## Future implementations
+
+- Migrate from SQLite3 to PostgreSQL;
 - UI/UX improvements;
-- Setup front build and complete deploy;
 - Handle pagination on Projects and Acitivites list.
 - Considere peformance improvents for the completion calculations. Both values are persisted in the database to avoid problems with performance, but a couple of improvements could be considered in the future, such as:
     - Move the calculations to a background job to avoid affecting user experience when saving the activity;
