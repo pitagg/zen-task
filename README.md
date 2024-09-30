@@ -81,32 +81,31 @@ RSpec Style Guides: https://github.com/rubocop/rspec-style-guide
 The SimpleCov is active by default, so just run `bundle exec rspec` to perform all tests and generate the coverage report.
 After complete it, just open the `/coverage/index.html` in your brower to see the report.
 
-
 **Run tests without code coverage report:**
 
 To disable the SimpleCov report, just pass the env `COVERAGE=false` to the rspec command: `COVERAGE=false bundle exec rspec`.
 
+### General feature information
 
-## General feature information
-
+- After setup the database with seeds, you can login with the user "user_1@domain.com" and password "12345678" to test the application.
 - Authentication with JWT (POST /login with email and password).
 - Route /me to check logged user data (GET /me with header Authorization + JWT).
 - JWT expires in 24 hours.
-- Activity end_date is updated to the current date when it's marked as completed.
 - API versioning: `/api/v1/...`. Requests examples at `docs/api-requests/` in both Thunder and Postam collections.
 
 
 ## Pending issues
 
+- Refactor React components to better organize and reuse them.
 - Translate API validation and error messages.
 - User sign-up and account removal.
-- Handle edit and show routes (link to the project).
 - Write frontend and integration tests.
 - Configure frontend build and complete deploy.
-- Test of README and docs translation.
+
 
 ## Future implementations
 
+- Handle edit and show routes (link to the project).
 - Migrate from SQLite3 to PostgreSQL;
 - UI/UX improvements;
 - Handle pagination on Projects and Acitivites list.

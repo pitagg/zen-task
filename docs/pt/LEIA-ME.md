@@ -51,6 +51,7 @@ Para iniciá-lo, primeiramente abra uma nova aba no seu terminal, vá para a pas
 
 Se tudo estiver correto, você está pronto para rodar `npm start`. Uma nova aba será aberta no seu navegador em `http://localhost:3001/`. Divirta-se!
 
+
 ## Fluxo de Desenvolvimento
 
 Esta é uma explicação rápida do fluxo de desenvolvimento adotado durante este projeto para cada nova implementação:
@@ -86,19 +87,28 @@ Para desativar o relatório do SimpleCov, basta passar a variável de ambiente `
 
 ## Informações gerais sobre funcionalidades
 
+- Após configurar a base de dados com as seeds, você pode logar com o usuário "user_1@domain.com" e senha "12345678" para tetar a aplicação.
 - Autenticação com JWT (POST /login com email e senha).
 - Rota /me para verificar os dados do usuário logado (GET /me com header Authorization + JWT).
 - JWT expira em 24 horas.
-- A data de término da atividade é atualizada para a data atual quando marcada como concluída.
 - Versionamento da API: `/api/v1/...`. Exemplos de requisições em `docs/api-requests/`, nas coleções Thunder e Postman.
 
-## Algumas pendências e sugestões de implementações Futuras
 
-- Lidar com paginação nas listas de Projetos e Atividades.
+## Pendência
+
+- Refatorar componentes do React para melhor organizá-los e reutilizá-los.
+- Traduzir mensagens de error e validações da API.
+- Criação e remoção de conta do usuário.
 - Escrever testes de frontend e de integração;
-- Melhorias de UI/UX;
-- Migrar para PostgreSQL;
 - Configurar build do front-end e completar o deploy;
+
+
+## Futuras implementações
+
+- Prover rotas de Edit e Show no react app (link direto para o projeto).
+- Migrar para PostgreSQL;
+- Melhorias de UI/UX;
+- Lidar com paginação nas listas de Projetos e Atividades.
 - Considerar melhorias de desempenho para os cálculos de conclusão. Ambos os valores são persistidos no banco de dados para evitar problemas de desempenho, mas algumas melhorias podem ser consideradas no futuro, como:
     - Mover os cálculos para um job em background para evitar afetar a experiência do usuário ao salvar a atividade;
     - Mover os valores para um cache (Redis), já que eles recebem muito mais operações de escrita.
