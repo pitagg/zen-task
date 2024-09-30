@@ -21,8 +21,6 @@ import Header from '../Header';
 import ProjectShow from "./ProjectShow";
 import ProjectEdit from "./ProjectEdit";
 import ProjectNew from "./ProjectNew";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -87,10 +85,6 @@ const ProjectsIndex = ({ apiClient }) => {
     fetchProjects();
   }
 
-  const formatDate = (date) => {
-    return format(new Date(date), "dd/MM/yyyy", { locale: ptBR });
-  };
-
   const isDelayed = (completion_date, end_date) => {
     return new Date(completion_date) > new Date(end_date);
   }
@@ -135,10 +129,10 @@ const ProjectsIndex = ({ apiClient }) => {
                     >
                       {project.name}
                     </TableCell>
-                    <TableCell>{formatDate(project.start_date)}</TableCell>
-                    <TableCell>{formatDate(project.end_date)}</TableCell>
+                    <TableCell>{apiClient.formatDate(project.start_date)}</TableCell>
+                    <TableCell>{apiClient.formatDate(project.end_date)}</TableCell>
                     <TableCell>
-                      {formatDate(project.completion_date)}
+                      {apiClient.formatDate(project.completion_date)}
                       {isDelayed(project.completion_date, project.end_date) && (
                         <Tooltip title="Risco de atraso com base na previsão de entrega da última atividade.">
                           <Warning color="error" style={{ marginLeft: 10 }} />

@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Box, Button, IconButton, TextField, Typography, Checkbox, Table, TableBody, TableCell, TableContainer, TableRow, Paper, Tooltip } from "@mui/material";
+import { Box, IconButton, TextField, Typography, Checkbox, Table, TableBody, TableCell, TableContainer, TableRow, Paper } from "@mui/material";
 import { Check, Edit, Delete, Cancel } from "@mui/icons-material";
-import { format } from "date-fns";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { ptBR } from "date-fns/locale";
 
 const ProjectShow = ({ project, onUpdate, apiClient }) => {
-  const blankFormData = {
-    name: "",
-    start_date: "",
-    end_date: ""
-  }
   const [activities, setActivities] = useState([]);
-  const [formData, setFormData] = useState(blankFormData);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [name, setName] = useState("");
   const [editingActivityId, setEditingActivityId] = useState(null);
 
   useEffect(() => {
@@ -29,19 +28,21 @@ const ProjectShow = ({ project, onUpdate, apiClient }) => {
     }
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
   const handleSubmit = async () => {
-    if (editingActivityId) {
-      await apiClient.updateActivity(project.id, editingActivityId, formData);
-    } else {
-      await apiClient.createActivity(project.id, formData);
+    try {
+      const formData = { name, start_date: startDate, end_date: endDate }
+      if (editingActivityId) {
+        await apiClient.updateActivity(project.id, editingActivityId, formData);
+      } else {
+        await apiClient.createActivity(project.id, formData);
+      }
+      refreshProjectActivities();
+      clearForm();
+    } catch (error) {
+      const { response, data } = error;
+      window.alert(`Erro ${error.response?.status}`);
+      console.log(error);
     }
-    refreshProjectActivities();
-    clearForm();
   };
 
   const refreshProjectActivities = async () => {
@@ -52,85 +53,89 @@ const ProjectShow = ({ project, onUpdate, apiClient }) => {
   };
 
   const clearForm = () => {
-    setFormData(blankFormData);
+    setName("");
+    setStartDate("");
+    setEndDate("");
     setEditingActivityId(null);
   };
 
   const handleEditClick = (activity) => {
-    setFormData({
-      name: activity.name,
-      start_date: activity.start_date,
-      end_date: activity.end_date,
-    });
+    setName(activity.name);
+    setStartDate(new Date(activity.start_date));
+    setEndDate(new Date(activity.end_date));
     setEditingActivityId(activity.id);
   };
 
   const handleDeleteClick = async (activityId) => {
     if (window.confirm("Tem certeza que quer excluir a atividade?")) {
-      await apiClient.deleteActivity(activityId);
-      refreshProjectActivities();
+      await apiClient.deleteActivity(project.id, activityId);
+      setActivities(activities.filter((activity) => activity.id !== activityId));
     }
   };
 
   const handleCompleteToggle = async (activity) => {
-    await apiClient.updateActivity(project.id, activity.id, { completed: !activity.completed });
-    refreshProjectActivities();
+    try {
+      await apiClient.updateActivity(project.id, activity.id, { completed: !activity.completed });
+      refreshProjectActivities();
+    } catch (error) {
+      const { response, data } = error;
+      window.alert(`Erro ${error.response?.status}`);
+      console.log(error);
+    }
   };
 
   return (
     <Box p={2}>
-      <Typography variant="h6">{project.name}</Typography>
-      <Box mb={3} p={2} border={1} borderRadius={4} borderColor="grey.300">
-        <Typography variant="subtitle1">{
-          editingActivityId ? 'Atualizar atividade' : 'Criar atividade'
-        }</Typography>
-        <TextField
-          label="Nome"
-          name="name"
-          value={formData.name}
-          onChange={handleInputChange}
-          fullWidth
-          margin="normal"
-          InputProps={{
-            endAdornment: (
-              <>
-                <IconButton onClick={handleSubmit}>
-                  <Check />
-                </IconButton>
-                {editingActivityId && (
-                  <IconButton onClick={clearForm}>
-                    <Cancel />
+      <LocalizationProvider dateAdapter={ AdapterDateFns } adapterLocale={ptBR}>
+        <Typography variant="h6">{project.name}</Typography>
+        <Box mb={3} p={2} border={1} borderRadius={4} borderColor="grey.300">
+          <Typography variant="subtitle1">{
+            editingActivityId ? 'Atualizar atividade' : 'Criar atividade'
+          }</Typography>
+          <TextField
+            label="Nome"
+            name="name"
+            value={name}
+            onChange={(e)=>{setName(e.target.value)}}
+            fullWidth
+            margin="normal"
+            InputProps={{
+              endAdornment: (
+                <>
+                  <IconButton onClick={handleSubmit}>
+                    <Check />
                   </IconButton>
-                )}
-              </>
-            ),
-          }}
-        />
-        <Box display="flex" gap={2}>
-          <TextField
-            label="Data de Início"
-            name="start_date"
-            value={formData.start_date}
-            onChange={handleInputChange}
-            fullWidth
-            type="date"
-            margin="normal"
-            InputLabelProps={{ shrink: true }}
-            required
+                  {editingActivityId && (
+                    <IconButton onClick={clearForm}>
+                      <Cancel />
+                    </IconButton>
+                  )}
+                </>
+              ),
+            }}
           />
-          <TextField
-            label="Data de Fim"
-            name="end_date"
-            value={formData.end_date}
-            onChange={handleInputChange}
-            fullWidth
-            type="date"
-            margin="normal"
-            InputLabelProps={{ shrink: true }}
-            required
-          />
+          <Box display="flex" gap={2}>
+            <DatePicker
+              label="Data de Início"
+              name="start_date"
+              value={startDate}
+              onChange={(newDate) => setStartDate(newDate)}
+              fullWidth
+              margin="normal"
+              InputLabelProps={{ shrink: true }}
+            />
+            <DatePicker
+              label="Data de Fim"
+              name="end_date"
+              value={endDate}
+              onChange={(newDate) => setEndDate(newDate)}
+              fullWidth
+              margin="normal"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Box>
         </Box>
-      </Box>
+      </LocalizationProvider>
 
       <TableContainer component={Paper}>
         <Table>
@@ -144,8 +149,8 @@ const ProjectShow = ({ project, onUpdate, apiClient }) => {
                   />
                 </TableCell>
                 <TableCell>{activity.name}</TableCell>
-                <TableCell>{format(new Date(activity.start_date), "dd/MM/yyyy", { locale: ptBR })}</TableCell>
-                <TableCell>{format(new Date(activity.end_date), "dd/MM/yyyy", { locale: ptBR })}</TableCell>
+                <TableCell>{apiClient.formatDate(activity.start_date)}</TableCell>
+                <TableCell>{apiClient.formatDate(activity.end_date)}</TableCell>
                 <TableCell>
                   <IconButton onClick={() => handleEditClick(activity)}>
                     <Edit />

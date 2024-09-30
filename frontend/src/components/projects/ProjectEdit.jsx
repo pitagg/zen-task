@@ -28,20 +28,31 @@ const ProjectEdit = ({ open, onClose, project, onUpdate, apiClient }) => {
     e.preventDefault();
 
     try {
-      const { responseOk, data, status } = await apiClient.updateProject(
+      const { data } = await apiClient.updateProject(
         project.id, {
         name,
         start_date: startDate,
         end_date: endDate,
       });
 
-      if (status === 422) return setErrors(data.errors);
-      if (!responseOk) throw new Error(`Erro ${status}: ${data.error}`);
-
       onUpdate(data);
       onClose();
     } catch (error) {
-      setErrors([error.message]);
+      const { response, data } = error;
+
+      switch (response?.status) {
+        case 422:
+          setErrors(data.errors || []);
+          break;
+
+        default:
+          if (data?.error) {
+            setErrors([`Erro ${response?.status}: ${data.error}`]);
+          } else {
+            setErrors(['Erro no servidor. Não foi possível processar a requisição.']);
+          }
+          break;
+      }
     }
   };
 

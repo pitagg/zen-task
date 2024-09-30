@@ -1,4 +1,7 @@
 import ResponseError from './ResponseError';
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+
 
 class ApiClient {
   // TODO: It must be configured by environment.
@@ -106,6 +109,15 @@ class ApiClient {
 
   createActivity(projectId, body) {
     return this.post(`projects/${projectId}/activities/`, body);
+  }
+
+  deleteActivity(projectId, id) {
+    return this.delete(`projects/${projectId}/activities/${id}`);
+  }
+
+  // TODO: Move it to a helper module.
+  formatDate(date) {
+    return format(new Date(date), "dd/MM/yyyy", { locale: ptBR });
   }
 }
 
