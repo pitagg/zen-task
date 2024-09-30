@@ -39,19 +39,21 @@ RSpec.describe Activity, type: :model do
     expect(activity).to_not be_valid
   end
 
-  context 'when completed is updated to true' do
-    it 'updates the end_date to today' do
-      activity.update!(start_date: Date.today - 5, end_date: Date.today + 10)
-      activity.update(completed: true)
-      expect(activity.end_date).to eq(Date.today)
-    end
-  end
+  ### This is weird as the activiy can be `uncompleted`, loosing the original end_date.
+  ### TODO: Maybe create another field `completed_at` keeping the original end_date.
+  # context 'when completed is updated to true' do
+  #   it 'updates the end_date to today' do
+  #     activity.update!(start_date: Date.today - 5, end_date: Date.today + 10)
+  #     activity.update(completed: true)
+  #     expect(activity.end_date).to eq(Date.today)
+  #   end
+  # end
 
-  context 'when completed is not updated to true' do
-    it 'does not update the end_date' do
-      initial_end_date = activity.end_date
-      activity.update(name: 'Updated Activity')
-      expect(activity.end_date).to eq(initial_end_date)
-    end
-  end
+  # context 'when completed is not updated to true' do
+  #   it 'does not update the end_date' do
+  #     initial_end_date = activity.end_date
+  #     activity.update(name: 'Updated Activity')
+  #     expect(activity.end_date).to eq(initial_end_date)
+  #   end
+  # end
 end
